@@ -7,6 +7,7 @@ import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { ModeToggle } from '@/components/theme/mode-toggle'
+import { useTheme } from 'next-themes' // Assumindo que você está usando next-themes
 
 const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
@@ -14,6 +15,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [cardId, setCardId] = useState('')
   const [showAlert, setShowAlert] = useState(false)
+  const { theme } = useTheme() // Obtém o tema atual
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardId(e.target.value)
@@ -63,13 +65,19 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center mt-12 text-3xl">
+      <div className="flex justify-center mt-40 text-3xl">
         <div className="flex space-x-3 items-center">
           <Avatar className="w-24 h-24">
             <AvatarImage src="./ngs.png" className="" />
             <AvatarFallback>NGS</AvatarFallback>
           </Avatar>
-          <h1 className="font-bold text-blue-600">NGS Backoffice</h1>
+          <h1
+            className={`text-3xl font-bold tracking-tight ${
+              theme === 'light' ? 'text-blue-600' : 'text-blue-300'
+            }`}
+          >
+            NGS Backoffice
+          </h1>
           <ModeToggle />
         </div>
       </div>
@@ -83,14 +91,14 @@ export default function Home() {
           />
           <Button
             type="button"
-            className="bg-blue-600 flex items-center"
+            className="bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300 ease-in-out flex items-center"
             onClick={handleEditCard}
             disabled={loading}
           >
             {loading ? (
               <Loader2 className="animate-spin mr-2 h-5 w-5" />
             ) : (
-              'Editar Card'
+              <h1 className=" font-bold -tracking-tight">EDITAR CARD</h1>
             )}
           </Button>
         </div>
