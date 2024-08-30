@@ -11,7 +11,6 @@ const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [cardId, setCardId] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
@@ -27,7 +26,6 @@ export default function Home() {
 
     try {
       setLoading(true)
-      setError(null)
       setShowAlert(false)
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -54,7 +52,6 @@ export default function Home() {
       })
       console.log(data)
     } catch (error) {
-      setError(error.message)
       console.error('Erro:', error)
       alert('Ocorreu um erro ao editar o card')
     } finally {
