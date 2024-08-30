@@ -14,7 +14,7 @@ export default function Home() {
   const [cardId, setCardId] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardId(e.target.value)
   }
 
