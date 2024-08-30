@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
+import { ModeToggle } from '@/components/theme/mode-toggle'
 
 const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
@@ -66,9 +67,10 @@ export default function Home() {
         <div className="flex space-x-3 items-center">
           <Avatar className="w-24 h-24">
             <AvatarImage src="./ngs.png" className="" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>NGS</AvatarFallback>
           </Avatar>
           <h1 className="font-bold text-blue-600">NGS Backoffice</h1>
+          <ModeToggle />
         </div>
       </div>
       <div className="flex justify-center mt-8">
