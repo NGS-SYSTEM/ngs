@@ -73,7 +73,7 @@ export default function Home() {
           </Avatar>
           <h1
             className={`text-3xl font-bold tracking-tight ${
-              theme === 'light' ? 'text-blue-600' : 'text-blue-300'
+              theme === 'dark' ? 'text-blue-300' : 'text-blue-600'
             }`}
           >
             NGS Backoffice
