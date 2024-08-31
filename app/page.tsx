@@ -1,13 +1,11 @@
 'use client'
 import { useState } from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
-import { ModeToggle } from '@/components/theme/mode-toggle'
-import { useTheme } from 'next-themes' // Assumindo que você está usando next-themes
+import { Header } from '@/components/headers/header'
 
 const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
@@ -15,7 +13,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [cardId, setCardId] = useState('')
   const [showAlert, setShowAlert] = useState(false)
-  const { theme } = useTheme() // Obtém o tema atual
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardId(e.target.value)
@@ -65,21 +62,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center mt-40 text-3xl">
-        <div className="flex space-x-3 items-center">
-          <Avatar className="w-24 h-24">
-            <AvatarImage src="./ngs.png" className="" />
-            <AvatarFallback>NGS</AvatarFallback>
-          </Avatar>
-          <h1
-            className={`text-3xl font-bold tracking-tight ${
-              theme === 'dark' ? 'text-blue-300' : 'text-blue-600'
-            }`}
-          >
-            NGS Backoffice
-          </h1>
-          <ModeToggle />
-        </div>
+      <div>
+        <Header />
       </div>
       <div className="flex justify-center mt-8">
         <div className="flex max-w-sm items-center space-x-2">
