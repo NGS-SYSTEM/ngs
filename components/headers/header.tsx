@@ -1,10 +1,4 @@
-import {
-  SquareUserRound,
-  CircleDollarSign,
-  ComputerIcon,
-  Handshake,
-  Car,
-} from 'lucide-react'
+import { CircleDollarSign, ComputerIcon, Handshake, Car } from 'lucide-react'
 import Link from 'next/link'
 import { Separator } from '../ui/separator'
 import { ModeToggle } from '../theme/mode-toggle'
