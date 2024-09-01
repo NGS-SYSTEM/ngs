@@ -55,13 +55,6 @@ export function Header() {
               <CircleDollarSign />
               Financeiras
             </Link>
-            <Link
-              href="/funcionarios"
-              className="flex items-center space-x-4 lg:space-x-6 text-2xl gap-2"
-            >
-              <SquareUserRound className="h-6 w-6" />
-              Funcionarios
-            </Link>
           </nav>
 
           <div className="ml-auto flex items-center gap-2"></div>
