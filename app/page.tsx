@@ -6,6 +6,15 @@ import { toast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 import { Header } from '@/components/headers/header'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
 
 const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
@@ -67,24 +76,37 @@ export default function Home() {
       </div>
       <div className="flex justify-center mt-8">
         <div className="flex max-w-sm items-center space-x-2">
-          <Input
-            type="text"
-            placeholder="Card ID"
-            value={cardId}
-            onChange={handleInputChange}
-          />
-          <Button
-            type="button"
-            className="bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300 ease-in-out flex items-center"
-            onClick={handleEditCard}
-            disabled={loading}
-          >
-            {loading ? (
-              <Loader2 className="animate-spin mr-2 h-5 w-5" />
-            ) : (
-              <h1 className=" font-bold -tracking-tight">EDITAR CARD</h1>
-            )}
-          </Button>
+          <Card className="w-[350px]">
+            <CardHeader>
+              <CardTitle className="mx-auto">Trello</CardTitle>
+              <CardDescription className="mx-auto">
+                Insira o ID do card a ser editado
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Input
+                type="text"
+                placeholder="Card ID"
+                value={cardId}
+                onChange={handleInputChange}
+              />
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline">Cancel</Button>
+              <Button
+                type="button"
+                className="bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300 ease-in-out flex items-center"
+                onClick={handleEditCard}
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                ) : (
+                  <h1 className=" font-bold -tracking-tight">EDITAR CARD</h1>
+                )}
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
 
