@@ -36,7 +36,7 @@ export function Header() {
               Trello
             </Link>
             <Link
-              href="/"
+              href="/proposta"
               className="flex items-center space-x-4 lg:space-x-6 text-2xl gap-2 "
             >
               <Handshake className="h-6 w-6" />
