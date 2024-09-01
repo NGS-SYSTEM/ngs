@@ -14,7 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
 
 const endpoint = 'https://trello-j9ex.onrender.com/edit'
 
