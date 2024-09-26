@@ -32,9 +32,10 @@ const formSchema = z.object({
   optionAMonthly: z.coerce.number(),
   optionBMonthly: z.coerce.number(),
   optionCMonthly: z.coerce.number(),
-  fee: z.coerce.number(),
+  fee: z.coerce.number().optional(), // Tornando o fee opcional
+  paymentOptions: z.enum(['3', '5', '6', '11']),
   isFinanciado: z.boolean(),
-  language: z.enum(['Português', 'Espanhol']), // Adicionando o campo de idioma com opções
+  language: z.enum(['Português', 'Espanhol']),
 })
 
 export function ProposalForm() {
@@ -51,9 +52,10 @@ export function ProposalForm() {
       optionAMonthly: 0,
       optionBMonthly: 0,
       optionCMonthly: 0,
-      fee: 0,
+      fee: 250, // Definindo o valor padrão para fee como 250
+      paymentOptions: '6',
       isFinanciado: true,
-      language: 'Português', // Definindo o valor padrão para o idioma
+      language: 'Português',
     },
   })
 
@@ -70,10 +72,10 @@ export function ProposalForm() {
       optionAMonthly: values.optionAMonthly.toString(),
       optionBMonthly: values.optionBMonthly.toString(),
       optionCMonthly: values.optionCMonthly.toString(),
-      fee: values.fee.toString(),
-
+      fee: values.fee?.toString() || '250', // Garantindo que fee seja passado como 250 se vazio
+      paymentOptions: values.paymentOptions,
       isFinanciado: values.isFinanciado.toString(),
-      language: values.language, // Incluindo o idioma selecionado nos parâmetros
+      language: values.language,
     })
 
     const imageUrl = `/api/og?${params.toString()}`
@@ -88,7 +90,7 @@ export function ProposalForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-8 w-full max-w-lg border rounded-md shadow-lg bg-white"
+          className="space-y-8 p-8 w-full max-w-lg border rounded-md shadow-lg "
         >
           <div className="flex gap-4 flex-col">
             <FormField
@@ -134,11 +136,61 @@ export function ProposalForm() {
               </FormItem>
             )}
           />
+          <div className="flex items-center justify-center gap-2 align-text-top ">
+            <FormField
+              control={form.control}
+              name="fee"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-lg">Fee</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Valor da Fee..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
+            <FormField
+              control={form.control}
+              name="paymentOptions"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-bold text-lg">
+                    Quantidade de pagamentos
+                  </FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="border p-2 rounded-md w-full dark:bg-inherit"
+                    >
+                      <option value="3" className="dark:text-black">
+                        3
+                      </option>
+                      <option value="5" className="dark:text-black">
+                        5
+                      </option>
+                      <option value="6" className="dark:text-black">
+                        6
+                      </option>
+                      <option value="11" className="dark:text-black">
+                        11
+                      </option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="flex flex-col gap-6">
             <div className="text-center">
               <p className="text-green-500 font-semibold">
-                Liability (Opção A)
+                Liability (Opção 1)
               </p>
               <div className="flex gap-4">
                 <FormField
@@ -172,7 +224,7 @@ export function ProposalForm() {
 
             <div className="text-center">
               <p className="text-blue-500 font-semibold">
-                Full Coverage (Opção B)
+                Full Coverage (Opção 2)
               </p>
               <div className="flex gap-4">
                 <FormField
@@ -206,7 +258,7 @@ export function ProposalForm() {
 
             <div className="text-center">
               <p className="text-red-500 font-semibold">
-                Full Coverage + Reboque (Opção C)
+                Full Coverage + Reboque (Opção 3)
               </p>
               <div className="flex gap-4">
                 <FormField
@@ -245,33 +297,24 @@ export function ProposalForm() {
             name="language"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-bold text-lg">
-                  Idioma da Proposta
-                </FormLabel>
+                <FormLabel className="font-bold text-lg">Idioma</FormLabel>
                 <FormControl>
-                  <div className="flex items-center gap-4">
-                    <label className="flex items-center">
-                      <Checkbox
-                        checked={field.value === 'Português'}
-                        onCheckedChange={() => field.onChange('Português')}
-                      />
-                      <span className="ml-2">Português</span>
-                    </label>
-                    <label className="flex items-center">
-                      <Checkbox
-                        checked={field.value === 'Espanhol'}
-                        onCheckedChange={() => field.onChange('Espanhol')}
-                      />
-                      <span className="ml-2">Espanhol</span>
-                    </label>
-                  </div>
+                  <select
+                    {...field}
+                    className="border p-2 rounded-md w-full dark:bg-inherit"
+                  >
+                    <option value="Português" className="dark:text-black">
+                      Português
+                    </option>
+                    <option value="Espanhol" className="dark:text-black">
+                      Espanhol
+                    </option>
+                  </select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          {/* Campo de status de veículo */}
           <FormField
             control={form.control}
             name="isFinanciado"
@@ -303,9 +346,11 @@ export function ProposalForm() {
             )}
           />
 
-          <Button type="submit" className="w-full">
-            Enviar Proposta
-          </Button>
+          <div className="flex justify-center">
+            <Button type="submit" className="w-48">
+              Gerar Proposta
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
