@@ -1,5 +1,6 @@
-'use client'
+"use client";
 
+import React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -8,7 +9,7 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -17,20 +18,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Input } from '@/components/ui/input'
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
     columns,
@@ -39,16 +40,16 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     state: { columnFilters },
-  })
+  });
 
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
           placeholder="FILTRAR POR NOME DA FINANCEIRA..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -68,7 +69,7 @@ export function DataTable<TData, TValue>({
                             header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -78,7 +79,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -122,5 +123,5 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
     </div>
-  )
+  );
 }

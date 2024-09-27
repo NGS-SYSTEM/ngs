@@ -1,7 +1,9 @@
-'use client'
-import { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+"use client";
+
+import React from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,26 +11,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu";
 
 export type Lienholder = {
-  name: string
-  address: string
-}
+  name: string;
+  address: string;
+};
 
 export const columns: ColumnDef<Lienholder>[] = [
   {
-    accessorKey: 'name',
-    header: 'Nome',
+    accessorKey: "name",
+    header: "Nome",
   },
   {
-    accessorKey: 'address',
-    header: 'Endereço',
+    accessorKey: "address",
+    header: "Endereço",
   },
   {
-    id: 'actions',
+    id: "actions",
     cell: ({ row }) => {
-      const lienholder = row.original
+      const lienholder = row.original;
 
       return (
         <DropdownMenu>
@@ -53,7 +55,7 @@ export const columns: ColumnDef<Lienholder>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
-]
+];
