@@ -29,7 +29,7 @@ export function Header() {
 
           <nav className="flex items-center  lg:space-x-6">
             <Link
-              href="/"
+              href="/card"
               className="flex items-center space-x-4 lg:space-x-6 text-2xl gap-2 "
             >
               <ComputerIcon className="h-6 w-6" />
