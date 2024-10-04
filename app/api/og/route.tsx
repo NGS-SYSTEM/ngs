@@ -22,11 +22,8 @@ export async function GET(request: Request) {
     const optionCMonthly = searchParams.get('optionCMonthly') || '0'
     const fee = searchParams.get('fee') || '250'
     const numberOfPayments = searchParams.get('paymentOptions') || '6'
-    // const isFinanciado =
-    //   searchParams.get('isFinanciado') === 'true' ? 'Financiado' : 'Quitado'
-    // const language = searchParams.get('language') || 'Português'
-
-    // Gerar a imagem com os dados capturados
+  
+    //Fazer Verificação pra gerar imagem de acordo com entrada
     return new ImageResponse(
       (
         <div
@@ -41,20 +38,20 @@ export async function GET(request: Request) {
             fontFamily: 'monospace',
           }}
         >
-          <img src="http://localhost:3000/proposta.png" alt="proposta" />
-          <div tw=" flex absolute top-100 left-35 bg-red-200 w-[150] overflow-hidden">
+          <img src="http://localhost:3000/proposta-psd-pt-3ops.png" alt="proposta" />
+          <div tw=" flex absolute top-100 left-35 w-[150] overflow-hidden">
             <p tw="text-2xl font-bold text-black  text-right overflow-hidden">
               {customerName.length > 45
                 ? customerName.slice(0, 45)
                 : customerName}
             </p>
           </div>
-          <div tw="absolute top-[118] left-[35] flex bg-green-200 overflow-hidden w-[150]">
+          <div tw="absolute top-[118] left-[35] flex  overflow-hidden w-[150]">
             <p tw="text-2xl font-bold text-black  text-right overflow-hidden">
               {vehicles.length > 40 ? vehicles.slice(0, 40) : vehicles}
             </p>
           </div>
-          <div tw="absolute top-[137] left-[35] flex overflow-hidden w-[150] bg-blue-200">
+          <div tw="absolute top-[137] left-[35] flex overflow-hidden w-[150] ">
             <p tw="text-2xl font-bold text-black  text-right">
               {address.length > 40 ? address.slice(0, 40) : address}
             </p>
@@ -72,9 +69,11 @@ export async function GET(request: Request) {
           <div tw="flex absolute top-[138] right-[105]  items-left flex-start w-[40]  justify-center items-center">
             <p tw="text-3xl font-bold text-black  text-right">
               $
-              {parseFloat(optionADueToday) +
+              {(
+                parseFloat(optionADueToday) +
                 parseFloat(fee) +
-                parseFloat(optionAMonthly) * (parseInt(numberOfPayments) - 1)}
+                parseFloat(optionAMonthly) * (parseInt(numberOfPayments) - 1)
+              ).toFixed(2)}
             </p>
           </div>
 
@@ -91,9 +90,11 @@ export async function GET(request: Request) {
           <div tw="flex absolute top-[172] right-[105]  items-left flex-start w-[40]  justify-center items-center">
             <p tw="text-3xl font-bold text-black  text-right">
               $
-              {parseFloat(optionBDueToday) +
+              {(
+                parseFloat(optionBDueToday) +
                 parseFloat(fee) +
-                parseFloat(optionBMonthly) * (parseInt(numberOfPayments) - 1)}
+                parseFloat(optionBMonthly) * (parseInt(numberOfPayments) - 1)
+              ).toFixed(2)}
             </p>
           </div>
           <div tw="flex absolute top-[206] right-[148]  items-left flex-start w-[40]  justify-center items-center">
