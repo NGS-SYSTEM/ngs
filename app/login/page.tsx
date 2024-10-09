@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/navigation';
 
 import { usePocketBase } from '@/lib/Pocketbase';
+
 import { useAuth } from '@/context/Auth';
+
 import { AuthProps } from '@/types/Auth';
+import { AuthStore } from '@/types/AuthStore';
+import { JwtProps } from '@/types/JwtProps';
 
 interface FormData {
   user: string;
@@ -13,9 +19,10 @@ interface FormData {
 }
 
 const LoginPage = () => {
-  const pb = usePocketBase(); 
+  const router = useRouter();
+  const pb = usePocketBase();
   const { login } = useAuth();
-  
+
   const [data, setData] = useState<FormData>({
     user: '',
     password: '',
@@ -42,8 +49,23 @@ const LoginPage = () => {
     formMutation.mutate();
   };
 
+  useEffect(() => {
+    const store: AuthStore = JSON.parse(
+      localStorage.getItem('pocketbase_auth') as string
+    );
+
+    if (store) {
+      const decoded: JwtProps = jwtDecode(store.token);
+      const isUserValid = decoded && decoded.id === store.model.id;
+
+      if (isUserValid) {
+        return router.push('/proposta');
+      }
+    }
+  }, []);
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-200">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center text-black">
           Entrar no sistema
@@ -60,7 +82,7 @@ const LoginPage = () => {
               type="text"
               id="username"
               name="user"
-              className="mt-1 p-2 bg-[#fff] w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+              className="mt-1 p-2 bg-[#fff] w-full border-2 border-gray-400 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
               placeholder="Digite seu usuário"
               value={data.user}
               onChange={(e) => setData({ ...data, user: e.target.value })}
@@ -78,7 +100,7 @@ const LoginPage = () => {
               type="password"
               id="password"
               name="password"
-              className="mt-1 p-2 w-full border bg-[#fff] border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
+              className="mt-1 p-2 w-full border-2 bg-[#fff] border-gray-400 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-black"
               placeholder="Digite sua senha"
               value={data.password}
               onChange={(e) => setData({ ...data, password: e.target.value })}
@@ -88,7 +110,7 @@ const LoginPage = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white text-base font-medium py-3 mt-4 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
+              className="w-full bg-indigo-900 text-white text-base font-medium py-3 mt-4 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
               disabled={!data.password || !data.user || formMutation.isPending}
             >
               {formMutation.isPending ? 'Entrando...' : 'Entrar'}

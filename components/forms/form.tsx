@@ -1,5 +1,3 @@
-// ProposalForm.tsx
-
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -58,7 +56,7 @@ export function ProposalForm() {
       optionCMonthly: 0,
       fee: 250, // Default fee value set to 250
       paymentOptions: '6',
-      isFinanciado: false, // Default to "Quitado"
+      isFinanciado: true, // Default to "Financiado"
       language: 'Português',
     },
   });
@@ -70,7 +68,7 @@ export function ProposalForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const fee = values.fee ?? 250
+    const fee = values.fee ?? 250;
     const paramsObj: Record<string, string> = {
       customersNames: values.customersNames,
       vehicles: values.vehicles,
@@ -101,14 +99,14 @@ export function ProposalForm() {
   }
 
   return (
-    <div className="flex flex-col mt-12 items-center justify-center space-y-8">
+    <div className="flex flex-col mt-12 items-center justify-center space-y-8 w-[100%]">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-8 w-full max-w-lg border rounded-md shadow-lg "
+          className="space-y-8 p-8 border rounded-md shadow-lg w-[100%] max-w-lg"
         >
           {/* Group 1: Informações da cotação */}
-          <div className="border p-4 rounded-md relative">
+          <div className="border p-4 rounded-md relative w-[100%]">
             <div className="absolute -top-4 left-3 px-1 bg-white dark:bg-background">
               <span className="text-xl font-medium">
                 Informações da cotação
@@ -196,17 +194,17 @@ export function ProposalForm() {
                       <div className="flex items-center gap-4">
                         <label className="flex items-center">
                           <Checkbox
-                            checked={!field.value}
-                            onCheckedChange={() => field.onChange(false)}
-                          />
-                          <span className="ml-2">Quitado</span>
-                        </label>
-                        <label className="flex items-center">
-                          <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
                           />
                           <span className="ml-2">Financiado</span>
+                        </label>
+                        <label className="flex items-center">
+                          <Checkbox
+                            checked={!field.value}
+                            onCheckedChange={() => field.onChange(false)}
+                          />
+                          <span className="ml-2">Quitado</span>
                         </label>
                       </div>
                     </FormControl>

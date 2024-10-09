@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = (userData: AuthProps) => {
     setUser(userData.record);
     pb?.authStore.save(userData.token, userData.record);
-    router.push('/card');
+    router.push('/proposta');
   };
 
   const logout = () => {

@@ -74,7 +74,7 @@ export default function Home() {
     <PrivateRoute>
       <div className="flex flex-col justify-center ">
         <div>
-          <Header />
+          <Header activeTab='card' />
         </div>
         <div className="flex justify-center mt-8">
           <div className="flex max-w-sm items-center space-x-2">
@@ -104,7 +104,7 @@ export default function Home() {
                   {loading ? (
                     <Loader2 className="animate-spin mr-2 h-5 w-5" />
                   ) : (
-                    <h1 className=" font-bold -tracking-tight">EDITAR CARD</h1>
+                    <h1 className=" font-bold -tracking-tight">Editar card</h1>
                   )}
                 </Button>
               </CardFooter>

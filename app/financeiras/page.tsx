@@ -8,8 +8,8 @@ import PrivateRoute from "@/components/private/PrivateRoute";
 export default async function Financeiras() {
   return (
     <PrivateRoute>
-      <div className="flex flex-col mx-auto w-1/2 justify-center items=start">
-        <Header />
+      <div className="flex flex-col mx-auto justify-center ">
+        <Header activeTab="financeiras" />
         <div className="">
           <DataTable data={lienholderList} columns={columns} />
         </div>
